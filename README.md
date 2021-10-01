@@ -1,5 +1,5 @@
 # Setup
-Visit our github pages page to use the dicodon optimizer.
+Visit our <a href="https://tyberiusprime.github.io/dicodon_optimizer_wasm/index.html">github pages</a> page to use the dicodon optimizer.
 
 All calculations happen in your browser.
 
