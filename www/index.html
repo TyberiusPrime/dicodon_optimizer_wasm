@@ -7,6 +7,25 @@
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
 	<style type='text/css'>
+	input, textarea {
+		margin-left:1em;
+		margin-bottom:.5em;
+	}
+	input[type=button] {
+		padding-left:.5em;
+		padding-right:.5em;
+		font-weight:bold;
+	}
+	label {
+		font-weight:bold;
+		padding-bottom:4px;
+	}
+	.form {
+		border: 1px dashed grey;
+		padding:4px;
+	}
+	.b {
+	}
 	.error {
 		color:red;
 	}
@@ -49,7 +68,21 @@
     <script src="./bootstrap.js"></script>
 
 
-<h1>Dicodon optimizer - coding sequence fasta to scoring table</h1>
+<h1>Dicodon optimizer</h1>
+
+<h2>Introduction</h2>
+	<div id="introduction">
+		<p>This is a in-browser app to optimze gene sequences on the dicodon level for 
+		enhanced gene expression.</p>
+
+		<p>You need <ul>
+			<li>a coding sequence (either DNA-codons or an amino acid sequence)</li>
+			<li>a frequency table of dicodon usage (which you cane derive from a coding sequence fasta below)</li>
+		</ul>
+		</p>
+		<p>Then follow the forms below until you receive your output.
+	</div>
+<hr />
 
 <h2 id='loading'> loading...</h2>
 
@@ -65,16 +98,15 @@ Either  <br />
 <p>
 		You can find such fasta files for example on the <a href="http://ftp.ensemblgenomes.org/pub/fungi/release-50/fasta/aspergillus_nidulans/cds/"> Ensembl Genomes 'ftp' server</a> under 'cds' as in 'coding sequence'.
 </p>
-<div>
-		<b>Coding FASTA</b>
-		<br />
+<div class="form">
+	<label for="input_file">Coding FASTA: </label><br />
 		<input type="file" id="input_file" >
 		<br />
 		<input type="button" value="Count" id='btn_count'/>
 </div>
 <div>
-	<b>Dicodon frequencies</b>
-	<textarea id="dicodon_frequencies" cols=80 rows=20>
+	<label for="dicodon_frequencies">Dicodon frequencies</label><br />
+	<textarea id="dicodon_frequencies" cols=80 rows=20 spellcheck=false>
 # Example from Aspergillus_nidulans.ASM1142v1.cds.all.fa
 AA	Dicodon	Rel.Freq	Count
 **	TAATAA	0.04853033862373231	847
@@ -4178,9 +4210,9 @@ YY	TATTAT	0.21355791224786858	2054
 </div>
 <hr /> 
 <h2>Step 2 - Analyze or optimize</h2>
-<b>Gene sequence</b> (DNA or amino acids, 'raw' or single sequence fasta)
+<label for="input_sequence">Gene sequence</label> (DNA or amino acids, 'raw' or single sequence fasta)
 <br />
-<textarea id="input_sequence" cols=80 rows=20>
+<textarea id="input_sequence" cols=80 rows=20 spellcheck=false>
 &gt;example
 ATGGCTGAAGAGTTTGGGGCATAG
 </textarea>
@@ -4188,8 +4220,8 @@ ATGGCTGAAGAGTTTGGGGCATAG
 		<input type="button" value="Analyze" id='btn_analyze'/>
 		<input type="button" value="Optimize" id='btn_optimize'/>
 <hr />
-<h2>Analysis</h2>
-<div id="output"></div>
+<h2>Results</h2>
+<div id="output">Perform analyze/optimize first</div>
 <h2>Sequence output</h2>
 <div><textarea id="output_sequence" readonly="true" cols=80 rows=20></textarea></div>
 

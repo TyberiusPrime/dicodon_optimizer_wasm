@@ -4,7 +4,7 @@ wasm.start();
 //document.getElementById("output").innerHTML = wasm.get_back('shu');
 document.getElementById("loading").style.display = 'none';
 document.getElementById("interface").style.display = 'block';
-//document.getElementById("dicodon_frequencies").value = '';
+document.getElementById("output_sequence").value = '';
 
 
 function btn_count(ev) {
