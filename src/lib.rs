@@ -57,25 +57,21 @@ fn fasta_to_count_table(fasta: &str) -> HashMap<String, u32> {
         let subbytes = subsection.as_bytes();
         let it = subbytes.iter();
         let mut it = it.skip_while(|&&x| x != b'\n');
-        it.next(); //eat \n
+        it.next(); //eat \n after >header
+        let mut it = it.filter(|&&x| x != b'\n');
         let mut dicodon: u32 = 0;
-        for _ in 0..6 {
-            let x = it.next();
-            match x {
-                Some(x) => {
-                    dicodon = dicodon << 3 | encode_base(*x);
-                }
-                None => {
-                    log!("too short");
-                    continue 'outer; //too short...
-                }
-            }
-        }
-        for base in it {
-            counter[dicodon as usize] += 1;
-            dicodon = (dicodon << 3 | encode_base(*base)) & 0b111111111111111111;
+        for (basea,baseb,basec) in it.tuples() {
+            counter[dicodon as usize] += 1; // don't worry about the start, we don't count N dicodons
+            let eba = encode_base(*basea);
+            let ebb = encode_base(*baseb);
+            let ebc = encode_base(*basec);
+            dicodon = (dicodon << 3 | eba) & 0b111111111111111111;
+            dicodon = (dicodon << 3 | ebb) & 0b111111111111111111;
+            dicodon = (dicodon << 3 | ebc) & 0b111111111111111111;
             // 6 bases..
         }
+        counter[dicodon as usize] += 1;
+
     }
     let mut dicodon_counter = HashMap::<String, u32>::new();
     for (enc_dicodon, count) in counter.into_iter().enumerate() {
